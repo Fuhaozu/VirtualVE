@@ -1,0 +1,692 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title> BuildingSceneLayer with Slice widget </title>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin-left: 20px;
+      float: left;
+      height: 100%;
+      width: 70%;
+      position: fixed;
+    }
+
+    #textPart {
+      height: 95%;
+      margin-left: 70%;
+      width: 30%;
+      padding-left: 2%;
+      border-width: 4px;
+      position: fixed;
+      overflow-y: auto;
+    }
+
+    #menu {
+      padding: 0.8em;
+      max-width: 200px;
+    }
+
+    #sliceContainer {
+      width: inherit;
+    }
+
+    textarea {
+      width: 95%;
+      height: 100px;
+    }
+
+    input {
+      width: 95%;
+    }
+
+    .card {
+      width: 95%;
+    }
+
+    #submit-btn {
+      padding-left: 2%;
+      width: 95%;
+    }
+
+    #intro {
+      width: 95%;
+    }
+  </style>
+
+  <link href="https://js.arcgis.com/4.23/esri/themes/light/main.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="static/plugins/bootstrap-3.4.1-dist/css/bootstrap.css">
+  <link rel="stylesheet" href="static/plugins/bootstrap-4.6.1-dist/bootstrap-4.6.1-dist/css/bootstrap.css">
+
+  <script src="https://js.arcgis.com/4.23/"></script>
+
+  <script type="text/javascript">
+    function add1() {
+      var input1 = document.createElement('input');
+      input1.setAttribute('type', 'text');
+      input1.setAttribute('name', 'organizers[]');
+      input1.setAttribute('class', 'git');
+
+      var btn1 = document.getElementById("addBtn");
+      btn1.insertBefore(input1, null);
+    }
+
+  </script>
+
+  <script>
+    require([
+      "esri/WebScene",
+      "esri/views/SceneView",
+      "esri/layers/BuildingSceneLayer",
+      "esri/widgets/Slice",
+      "esri/analysis/SlicePlane",
+      "esri/widgets/LayerList",
+      "esri/core/Collection",
+      "esri/widgets/BuildingExplorer",
+      "esri/widgets/Daylight",
+      "esri/widgets/BasemapGallery",
+      "esri/widgets/DirectLineMeasurement3D",
+      "esri/widgets/AreaMeasurement3D",
+      "esri/core/promiseUtils",
+      "esri/widgets/Bookmarks",
+      "esri/widgets/Expand"
+    ], (
+      WebScene,
+      SceneView,
+      BuildingSceneLayer,
+      Slice,
+      SlicePlane,
+      LayerList,
+      Collection,
+      BuildingExplorer,
+      Daylight,
+      BasemapGallery,
+      DirectLineMeasurement3D,
+      AreaMeasurement3D,
+      promiseUtils,
+      Bookmarks,
+      Expand
+    ) => {
+      let activeWidget = null;
+      // Load webscene and display it in a SceneView
+      const webscene = new WebScene({
+        portalItem: {
+          id: "...", //replace with your ArcGIS id
+        }
+      });
+
+      const view = new SceneView({
+        container: "viewDiv",
+        environment: {
+          atmosphere: {
+            // creates a realistic view of the atmosphere
+            quality: "high"
+          },
+          lighting: {
+            // gets the current date at the user's location
+            // and converts it to the local date in Brest, France
+            date: new Date(),
+            directShadowsEnabled: true
+          }
+        },
+        map: webscene
+      });
+
+      // Create the BuildingSceneLayer and add it to the webscene
+      const buildingLayer = new BuildingSceneLayer({
+        url: "https://tiles.arcgis.com/tiles/", //replace with your ArcGIS url
+        title: "Design Model"
+      });
+      webscene.layers.add(buildingLayer);
+
+      // Add a layer list widget
+      const layerList = new LayerList({
+        view: view
+      });
+      //view.ui.empty("top-left");
+      view.ui.add(layerList, "top-right");
+
+      // End of a layer list widget
+
+
+      /**************************************
+       * Initialize the daylight widget
+       **************************************/
+
+      const daylightWidget = new Daylight({
+        view: view,
+        // plays the animation twice as fast than the default one
+        playSpeedMultiplier: 2,
+        // disable the timezone selection button
+        visibleElements: {
+          timezone: false
+        }
+      });
+
+      const btnDaylight = document.getElementById("buttonDaylight");
+
+      view.ui.add(btnDaylight, "top-right");
+      view.ui.add(daylightWidget, "top-right");
+
+      // hide and show widget for display on small devices
+      let widgetIsVisible = false;
+      btnDaylight.addEventListener("click", () => {
+        if (widgetIsVisible) {
+          view.ui.remove(daylightWidget);
+          widgetIsVisible = false;
+        } else {
+          view.ui.add(daylightWidget, "top-right");
+          widgetIsVisible = true;
+          //view.ui.add(daylightWidget, "top-right");
+        }
+      });
+
+      /**************************************
+       * End of daylight widget
+       **************************************/
+      /**************************************
+       * Initialize the measure tool
+       **************************************/
+
+      view.ui.add("topbar", "top-left");
+
+      document
+        .getElementById("distanceButton")
+        .addEventListener("click", (event) => {
+          setActiveWidget(null);
+          if (!event.target.classList.contains("active")) {
+            setActiveWidget("distance");
+          } else {
+            setActiveButton(null);
+          }
+        });
+
+      document
+        .getElementById("areaButton")
+        .addEventListener("click", (event) => {
+          setActiveWidget(null);
+          if (!event.target.classList.contains("active")) {
+            setActiveWidget("area");
+          } else {
+            setActiveButton(null);
+          }
+        });
+
+      function setActiveWidget(type) {
+        switch (type) {
+          case "distance":
+            activeWidget = new DirectLineMeasurement3D({
+              view: view
+            });
+
+            // skip the initial 'new measurement' button
+            activeWidget.viewModel.start().catch((error) => {
+              if (promiseUtils.isAbortError(error)) {
+                return; // don't display abort errors
+              }
+              throw error; // throw other errors since they are of interest
+            });
+
+            view.ui.add(activeWidget, "bottom-left");
+            setActiveButton(document.getElementById("distanceButton"));
+            break;
+          case "area":
+            activeWidget = new AreaMeasurement3D({
+              view: view
+            });
+
+            // skip the initial 'new measurement' button
+            activeWidget.viewModel.start().catch((error) => {
+              if (promiseUtils.isAbortError(error)) {
+                return; // don't display abort errors
+              }
+              throw error; // throw other errors since they are of interest
+            });
+
+            view.ui.add(activeWidget, "bottom-left");
+            setActiveButton(document.getElementById("areaButton"));
+            break;
+          case null:
+            if (activeWidget) {
+              view.ui.remove(activeWidget);
+              activeWidget.destroy();
+              activeWidget = null;
+            }
+            break;
+        }
+      };
+
+      function setActiveButton(selectedButton) {
+        // focus the view to activate keyboard shortcuts for sketching
+        view.focus();
+        const elements = document.getElementsByClassName("active");
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].classList.remove("active");
+        }
+        if (selectedButton) {
+          selectedButton.classList.add("active");
+        }
+      };
+
+      /**************************************
+       * End of the measure tool
+       **************************************/
+
+      /**************************************
+       * Initialize the slice
+       **************************************/
+
+      view.ui.add("menu", "top-left");
+
+      buildingLayer.when(() => {
+        setSliceWidget();
+      });
+
+      function setSliceWidget() {
+        sliceWidget = new Slice({
+          view: view,
+          container: "sliceContainer"
+        });
+        //   sliceWidget.viewModel.excludedLayers.addMany(excludedLayers);
+        sliceTiltEnabled = true;
+        sliceWidget.viewModel.tiltEnabled = sliceTiltEnabled;
+        //sliceWidget.viewModel.shape = plane;        
+      };
+
+      /**************************************
+       * Initialize the daylight widget
+       **************************************/
+
+      /**************************************
+       * Initialize the BuildingExplorer
+       **************************************/
+      view.when(() => {
+        // get the BuildingSceneLayer from the webscene
+        webscene.allLayers.forEach((layer) => {
+          if (layer.title === "Design Model") {
+            // explore components in the layer using the BuildingExplorer widget
+            const buildingExplorer = new BuildingExplorer({
+              view: view,
+              layers: [layer]
+            });
+            view.ui.add(buildingExplorer, "bottom-right");
+          }
+        });
+      });
+
+      /**************************************
+       * End of the BuildingExplorer
+       **************************************/
+
+
+      /**************************************
+       * Initialize Bookmarks
+       **************************************/
+      const bookmarks = new Bookmarks({
+        view: view,
+        // allows bookmarks to be added, edited, or deleted
+        editingEnabled: true,
+        visibleElements: {
+          time: true // don't show the time (h:m:s) next to the date
+        }
+      });
+
+      const bkExpand = new Expand({
+        view: view,
+        content: bookmarks,
+        expanded: true
+      });
+
+      // Add the widget to the top-right corner of the view
+      view.ui.add(bkExpand, "bottom-left");
+
+      /**************************************
+       * End of the Bookmarks
+       **************************************/
+
+    });
+  </script>
+</head>
+
+<body>
+  <nav class="nav nav-pills flex-column flex-sm-row" style="margin-left: 20px;font-size: 20px;width: 1200px;">
+    <a class="flex-sm-fill text-sm-center nav-link" href="project_goal.HTML">Project Goal Identification</a>
+    <a class="flex-sm-fill text-sm-center nav-link active" href="Site_View test.HTML">Site Condition Examination</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="Model_View.HTML">Design Review</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="Cost_distribution - blank.HTML">Cost Analysis</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="info_sum.HTML">Information Summary</a>
+  </nav>
+
+  <div id="viewDiv">
+    <div id="menu" class="esri-widget">
+      <div id="sliceContainer"></div>
+    </div>
+
+  </div>
+
+  <div>
+    <button id="buttonDaylight" class="esri-widget esri-widget--button">
+      <span class="esri-icon-lightbulb"></span>
+    </button>
+  </div>
+
+  <div id="topbar">
+    <button class="action-button esri-icon-measure-line" id="distanceButton" type="button"
+      title="Measure distance between two points"></button>
+    <button class="action-button esri-icon-measure-area" id="areaButton" type="button" title="Measure area"></button>
+  </div>
+
+
+  <div id="textPart">
+
+    <div id="intro" class="alert alert-dark" role="alert">
+      <h2> <b>Review on Site Condition</b> </h2>
+      <p>In this part, you can review on the site condition through this platform. The BIM model and GIS based site
+        condition have been integrated on the left side. And The constraints related to site condition are further
+        divided into three categories, including Geological constraints, Surrounding constraints, and Construction site
+        constraints.</p>
+      <hr>
+      <p class="mb-0">The information are visualized in multiple ways, including 3D model, text, figure and PDF files.
+      </p>
+    </div>
+
+
+    <div class="card">
+      <h2 class="card-header">Issues about site work</h2>
+      <div class="card-body">
+
+        <h3 class="card-title">Site Location</h3>
+        <p class="card-text">
+          <textarea class="form-control" style="width:98%" rows="2">The project locates in the city center. Thus, there is a stricter limit on the construction noise. And the detailed restrictions on the site noise can be found through the link below. </textarea><br>
+          <img src="./static/resources/site_constraints_fig/site condition new.png" alt="" width="98%"><br>
+        </p>
+        <a href="./static/resources/1.pdf" target="_blank" download style="text-decoration:none" class="btn btn-primary">View details</a>
+        <span>
+          <button type="button" style="text-decoration:none" class="btn btn-info" >Add
+            comments
+          </button>
+        </span>
+
+
+        <h3 class="card-title">Construction Noise Barrier</h3>
+        <p class="card-text">
+          <textarea class="form-control" style="width:98%" rows="3">An effective way of reducing noise is to install a purpose-built barrier between the noisy equipment and the noise sensitive receiver. These can either be fabricated on site from readily available building materials or can be constructed from commercially available panels which are lined with sound absorbing materials to achieve the maximum shielding effect. For maximum effectiveness, a barrier should be located as close as possible to either the noise source, and should be built so as to shield totally the noise source. Gaps and openings at joints in the barrier material should be avoided.</textarea><br>
+          <img src="./static/resources/site_constraints_fig/barrier.png" alt="" width="98%"><br>
+        </p>
+        <a href="./static/resources/1.pdf" target="_blank" download style="text-decoration:none" class="btn btn-primary">View details</a>
+        <span>
+          <button type="button" style="text-decoration:none" class="btn btn-info" >Add
+            comments
+          </button>
+        </span>
+
+        <h3 class="card-title">Noise control level</h3>
+        <p class="card-text">
+          <textarea class="form-control" style="width: 98%" rows="1">The noise level can be proved through the listed measures.</textarea><br>
+          <img src="./static/resources/site_constraints_fig/nosielevel.png" alt="" width="98%"><br>
+        </p>
+        <a href="./static/resources/1.pdf" target="_blank" download style="text-decoration:none" class="btn btn-primary">View details</a>
+        <span>
+          <button type="button" style="text-decoration:none" class="btn btn-info" >Add
+            comments
+          </button>
+        </span>
+
+        <!-- <span id="addBtn">
+          <button name='oldBtn' type="button" style="text-decoration:none" class="btn btn-info" onclick="add1()">Add
+            Constraints
+          </button>
+        </span> -->
+
+      </div>
+    </div>
+
+    
+
+    <div class="card">
+      <h2 class="card-header">Technical consideration during design</h2>
+      <div class="card-body">
+
+        <h3 class="card-title">Factor one</h3>
+        <p class="card-text">
+          <textarea class="form-control" style="width: 98%" rows="3"></textarea><br>
+          <img src="./static/resources/s4.png" alt="" width="98%"><br>
+        </p>
+        <a href="./static/resources/1.pdf" target="_blank" download style="text-decoration:none" class="btn btn-primary">View details</a>
+        <span>
+          <button type="button" style="text-decoration:none" class="btn btn-info" >Add
+            comments
+          </button>
+        </span>
+
+        <h3 class="card-title">Factor two</h3>
+        <p class="card-text">
+          <textarea class="form-control" style="width:98%" rows="3"></textarea>
+        </p>
+        <a href="./static/resources/1.pdf" target="_blank" download style="text-decoration:none" class="btn btn-primary">View details</a>
+        <span>
+          <button type="button" style="text-decoration:none" class="btn btn-info" >Add
+            comments
+          </button>
+        </span>
+
+          <!-- <span id="addComBtn">
+            <button name='oldCoBtn' type="button" style="text-decoration:none" class="btn btn-info" onclick="add2()">Add
+              comments
+            </button>
+          </span>
+
+        <span id="addBtn">
+          <button name='oldBtn' type="button" style="text-decoration:none" class="btn btn-info" onclick="add1()">Add
+            Constraints
+          </button>
+        </span> -->
+      </div>
+    </div><br>
+
+
+
+    <div class="card">
+      <h2 class="card-header">Issues about supply chain</h2>
+      <div class="card-body">
+
+
+        
+        <h3 class="card-title">Land Boundary Control Points</h3>
+        <p class="card-text">
+          <textarea class="form-control" style="width:98%" rows="2">Locations of Land Boundary Control Points, Kwai Tsing Container Terminals, River Trade Terminal, Mid-stream Sites and Public Cargo Working Areas</textarea>
+          <img src="./static/resources/site_constraints_fig/land check points.png" alt="" width="98%"><br>
+        </p>
+        <a href="./static/resources/1.pdf" target="_blank" download style="text-decoration:none" class="btn btn-primary">View details</a>
+        <span>
+          <button type="button" style="text-decoration:none" class="btn btn-info" >Add
+            comments
+          </button>
+        </span>
+
+        <h3 class="card-title">Permit long loads</h3>
+        <p class="card-text">
+          <textarea class="form-control" style="width: 98%" rows="3">According to Regulation 55 of the Road Traffic (Traffic Control) Regulations (Cap. 374G), no driver shall drive on a road a vehicle that is so loaded that the load in the case of a vehicle other than a trailer, extends more than 1.5 m from the foremost part of the vehicle.</textarea><br>
+          <img src="./static/resources/site_constraints_fig/permit extension dimensions.png" alt="" width="98%"><br>
+        </p>
+        <a href="./static/resources/1.pdf" target="_blank" download style="text-decoration:none" class="btn btn-primary">View details</a>
+        <span>
+          <button type="button" style="text-decoration:none" class="btn btn-info" >Add
+            comments
+          </button>
+        </span>
+
+
+        <h3 class="card-title">Permit wide loads</h3>
+        <p class="card-text">
+          <textarea class="form-control" style="width:98%" rows="3">No driver shall drive on a road a vehicle that is so loaded that the load in the case of a vehicle other than a trailer extends backwards more than 1.4 m behind the rearmost part of the vehicle.</textarea>
+          <img src="./static/resources/site_constraints_fig/permit wideth dimension.png" alt="" width="98%"><br>
+        </p>
+        <a href="./static/resources/1.pdf" target="_blank" download style="text-decoration:none" class="btn btn-primary">View details</a>
+
+        <span id="addComBtn">
+          <button name='oldCoBtn' type="button" style="text-decoration:none" class="btn btn-info" onclick="add2()">Add
+            comments
+          </button>
+        </span>
+
+      <span id="addBtn">
+        <button name='oldBtn' type="button" style="text-decoration:none" class="btn btn-info" onclick="add1()">Add
+          Constraints
+        </button>
+      </span>
+      </div>
+    </div>
+
+
+
+    <div class="card">
+      <h2 class="card-header">Review comments</h2>
+      <div class="card-body">
+        <textarea style="width:98%"> </textarea> <br>
+      </div>
+
+      <input type="file" name="" id="input_img" />
+      <div id="show_img"></div>
+
+    </div>
+
+
+
+    <div id='submit-btn'>
+      <input type="submit" class="btn btn-primary" style="width:98%" value="Confirmation">
+    </div>
+  </div>
+
+
+
+
+
+  <!-- 添加 new constraints -->
+  <script type="text/javascript">
+
+
+    function add1() {
+      var parent = document.getElementById("addBtn");
+      console.log("Hi, here!");
+
+      var newCons = document.createElement('div');
+      
+
+      newCons.innerHTML = '<div>\
+                                      <h3 class=\"card-title\">     <input style=\"width:98%\" type=\"text\" value=\"Add New Constraints\">  </h3 >\
+                                      <p class=\"card-text\">\
+                                      <textarea class=\"form-control\" style=\"width:98%\" rows=\"3\">Input the details anout the new constraint</textarea>\
+                                      </p>\
+                                      <input type="file" name="" id="input_img" />\
+                                      <span id=\"show_img\"></span>\
+                                      <span id=\"addComBtn\">\
+                                          <button name=\'oldCoBtn\' type=\"button\" style=\"text-decoration:none\" class=\"btn btn-info\" onclick=\"add2()\">Add comments\
+                                          </button>\
+                                      </span>\
+                                      <span id=\"addBtn\">\
+                                          <button name=\'oldBtn\' type=\"button\" style=\"text-decoration:none\" class=\"btn btn-info\" onclick=\"add1()\">Add Constraints\
+                                          </button>\
+                                      </span>\
+                                      </div >\ '
+
+      var oldBtn = document.getElementsByName("oldBtn");
+      console.log(oldBtn);
+
+      for (var i = 0; i < oldBtn.length; ++i) {
+        var item = oldBtn[i];
+        console.log(item);
+        console.log("Hi, here!");
+        item.setAttribute('style', 'VISIBILITY: hidden');
+      }
+
+      parent.parentNode.insertBefore(newCons, null);
+
+    };
+
+  </script>
+
+
+
+
+  <!-- 添加 new comments -->
+  <script type="text/javascript">
+
+
+    function add2() {
+      var parent = document.getElementById("addComBtn");
+      console.log("Hi, here!");
+
+      var newCons = document.createElement('div');
+
+      newCons.innerHTML = '<div>\
+                                      <p class=\"card-text\">\
+                                      <textarea class=\"form-control\" style=\"width:98%\" rows=\"3\">Input the details anout the new comments</textarea>\
+                                      </p>\
+                                      <input type="file" name="" id="input_img" />\
+                                      <span id=\"show_img\"></span>\
+                                      <span id=\"addComBtn\">\
+                                          <button name=\'oldCoBtn\' type=\"button\" style=\"text-decoration:none\" class=\"btn btn-info\" onclick=\"add2()\">Add comments\
+                                          </button>\
+                                      </span>\
+                                      <span id=\"addBtn\">\
+                                          <button name=\'oldBtn\' type=\"button\" style=\"text-decoration:none\" class=\"btn btn-info\" onclick=\"add1()\">Add Constraints\
+                                          </button>\
+                                      </span>\
+                                      </div >\ '
+
+      var oldCoBtn = document.getElementsByName("oldCoBtn");
+      console.log(oldCoBtn);
+
+      for (var i = 0; i < oldCoBtn.length; ++i) {
+        var item = oldCoBtn[i];
+        console.log(item);
+        console.log("Hi, here!");
+        item.setAttribute('style', 'VISIBILITY: hidden');
+      }
+
+      var oldBtn = document.getElementsByName("oldBtn");
+      console.log(oldBtn);
+
+      for (var i = 0; i < oldBtn.length; ++i) {
+        var item = oldBtn[i];
+        console.log(item);
+        console.log("Hi, here!");
+        item.setAttribute('style', 'VISIBILITY: hidden');
+      }
+
+      parent.parentNode.insertBefore(newCons, null);
+
+    };
+
+  </script>
+
+
+  <script>
+    var getUserPhoto = document.getElementById("input_img");
+    getUserPhoto.onchange = function () {
+      var file = this.files;
+      console.log(file);
+      var reader = new FileReader();
+      reader.readAsDataURL(file[0]);
+      reader.onload = function () {
+        var image = document.createElement("img");
+        image.width = "500";
+        image.src = reader.result;
+        var showPicture = document.getElementById("show_img");
+        showPicture.append(image);
+      };
+    };
+  </script>
+
+
+
+
+</body>
+
+</html>

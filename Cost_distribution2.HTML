@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+  <style>
+    
+    /* table {
+        border: 1px solid rgb(7, 7, 7);
+    } */
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        border:"1px";
+        table-layout:auto;
+    }
+    #taInfo{
+      padding: 0;
+        margin-left: 100px;
+        float: left;
+        height: 100%;
+        width:55%;
+        /* position:fixed; */
+        font-size: 18px;
+    }
+    #costDis{
+        /* height: 80%;
+        margin-left: 60%;
+        width: 39%;
+        padding-left: 20px; */
+        /* float: right; */
+        /* width: 10%; */
+        /* margin: 92%;  */
+        /* height: 1850px; */
+        /* border-style: dotted;  */
+        /* border-width: 3px;
+        position:fixed; */
+        height: 80%;
+        overflow-y: auto; 
+    }
+    #rightDiv{
+        height: 95%;
+        margin-left: 60%;
+        width: 40%;
+        padding-left: 20px;
+        /* float: right; */
+        /* width: 10%; */
+        /* margin: 92%;  */
+        /* height: 1850px; */
+        /* border-style: dotted;  */
+        border-width: 3px;
+        position:fixed;
+        overflow-y: auto; 
+    }
+    #costDis{
+      height:85%
+    }
+    .nuM{
+      text-align: center;
+      /* align-items: center; */
+      vertical-align: middle!important;
+    }
+
+    #spl{
+      text-align: left;
+      /* align-items: center; */
+      vertical-align: middle!important;
+    }
+
+</style>
+
+<link rel="stylesheet" href="static/plugins/bootstrap-3.4.1-dist/css/bootstrap.css">
+<link rel="stylesheet" href="static/plugins/bootstrap-4.6.1-dist/bootstrap-4.6.1-dist/css/bootstrap.css">
+  
+</head>
+<body style="height: 100%; margin: 0">
+
+  <nav class="nav nav-pills flex-column flex-sm-row" style="margin-left: 20px;font-size: 20px; width: 1200px;">
+    <a class="flex-sm-fill text-sm-center nav-link" href="project_goal.HTML">Project Goal Identification</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="Site_View test.HTML">Site Condition Review</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="Model_View.HTML">Design Model Review</a>
+    <a class="flex-sm-fill text-sm-center nav-link  active" href="Cost_distribution2.HTML">Cost Analysis</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="info_sum.HTML">Information Summary</a>
+  </nav>
+
+  <div id="taInfo">
+    <div style="font-size: 20px; text-align: center; line-height: 35px;"><b>Cost Distribution of Original Design Following Uniformat (Per Sq.Ft.in HK$)</b></div>
+    <table class="table"  width="100%" >
+      <!-- <caption>
+        <h2>Cost Distribution of Original Design Following Uniformat </h2>
+        <h3>Per Sq.Ft.(HK$)</h3>
+      </caption> -->
+      <!-- <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead> -->
+      <thead class="thead-light">
+          <tr>
+              <th scope="col" colspan="1" width="50px">Major group elements</th>
+              <!-- <td>Major group elements</td> -->
+              <th  scope="col" class="nuM">Total Cost</th>
+              <th scope="col"  class="nuM">Proportion</th>
+              <!-- <td>Code</td> -->
+              <th scope="col" colspan="1"width="50px" >Group Elements</th>
+              <th  scope="col" align="center" class="nuM">Sub-total cost</th>
+              <!-- <td>Code</td> -->
+              <th scope="col" colspan="1" id="spl">Individual Elements</th>
+              <th scope="col" align="center" class="nuM">Sub-total cost</th>
+  
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <th scope="row" class="nuM" rowspan="5">A Substructure</th>
+              <td rowspan="5" align="center" class="nuM">92.00</td>
+              <td rowspan="5" align="center" class="nuM">2.24%</td>
+              <td rowspan="3" class="nuM">A10 Foundations</td>
+              <td rowspan="3" align="center" class="nuM">36.00</td>
+              <td>A1010 Standard Foundations</td>
+              <td align="center" class="nuM">22.40</td>
+             
+          </tr>
+          <tr>
+            <td>A1020 Special Foundations</td>
+              <td align="center" class="nuM">0.00</td>
+          </tr>
+          <tr>
+            <td>A1030 Slab on Grade</td>
+              <td align="center" class="nuM">13.60</td>
+          </tr>
+          <tr>
+            <td rowspan="2" class="nuM">A20 Basement Construction</td>
+              <td rowspan="2" align="center" class="nuM">56.00</td>
+              <td>A2010 Basement Excavation</td>
+              <td align="center" class="nuM">20.00</td>
+          </tr>
+          <tr>
+            <td>A2020 Basement Wall</td>
+              <td align="center" class="nuM">36.00</td>
+          </tr>
+  
+          <tr>
+            <th scope="row" class="nuM" rowspan="7">B Shell</th>
+            <td rowspan="7" align="center" class="nuM">1812.32</td>
+            <td rowspan="7" align="center" class="nuM">44.19%</td>
+            <td rowspan="2" class="nuM">B10 Superstructure</td>
+            <td rowspan="2" align="center" class="nuM">459.60</td>
+            <td>B1010 Floor Construction</td>
+            <td align="center" class="nuM">429.60</td>
+           
+        </tr>
+        <tr>
+          <td>B1020 Exterior Walls</td>
+            <td align="center" class="nuM">30.00</td>
+        </tr>      
+        <tr>
+          <td rowspan="3" class="nuM">B20 Exterior Enclosure</td>
+            <td rowspan="3" align="center" class="nuM">1313.40</td>
+            <td>B2010 Exterior Walls</td>
+            <td align="center" class="nuM">729.00</td>
+        </tr>
+        <tr>
+          <td>B2020 Exterior Windows</td>
+            <td align="center" class="nuM">560.40</td>
+        </tr>
+        <tr>
+          <td>B2030 Exterior Doors</td>
+            <td align="center" class="nuM">24.00</td>
+        </tr>
+        <tr>
+          <td rowspan="2" class="nuM">B30 Roofing</td>
+            <td rowspan="2" align="center" class="nuM">39.32</td>
+            <td>B3010 Roofing Coverings</td>
+            <td align="center" class="nuM">38.40</td>
+        </tr>
+        <tr>
+          <td>B3020 Roofing Openings</td>
+            <td align="center" class="nuM">0.92</td>
+        </tr>
+  
+  
+        <tr>
+          <th scope="row" class="nuM" rowspan="8">C Interiors</th>
+          <td rowspan="8" align="center" class="nuM">750.02</td>
+          <td rowspan="8" align="center" class="nuM">18.29%</td>
+          <td rowspan="3" class="nuM">C10 Interior Construction</td>
+          <td rowspan="3" align="center" class="nuM">424.32</td>
+          <td>C1010 Partitions</td>
+          <td class="nuM">357.60</td>       
+      </tr>
+      <tr>
+        <td>C1020 Interior Doors</td>
+          <td class="nuM">52.00</td>
+      </tr>
+      <tr>
+        <td>C1030 Fittings</td>
+          <td class="nuM">14.72</td>
+      </tr>       
+      <tr>
+        <td rowspan="2" class="nuM">C20 Stairs</td>
+          <td rowspan="2" class="nuM">76.80</td>
+          <td>C2010 Stair construction</td>
+          <td class="nuM">76.80</td>
+      </tr>
+      <tr>
+        <td>C2020 Stair Finishes</td>
+          <td class="nuM">0.00</td>
+      </tr>
+      <tr>
+        <td rowspan="3" class="nuM">C30 Interior Finishes</td>
+          <td rowspan="3" class="nuM">248.90</td>
+          <td>C3010 Wall Finishes</td>
+          <td class="nuM">83.70</td>
+      </tr>
+      <tr>
+        <td>C3020 Floor Finishes</td>
+          <td class="nuM">103.60</td>
+      </tr>
+      <tr>
+        <td>C3030 Ceiling Finishes</td>
+          <td class="nuM">61.60</td>
+      </tr>
+  
+  
+  
+      <tr>
+        <th scope="row" class="nuM"  rowspan="24">D Services</th>
+        <td rowspan="24" class="nuM">1392.80</td>
+        <td rowspan="24" class="nuM">46.83%</td>
+        <td rowspan="3" class="nuM">D10 Conveying</td>
+        <td rowspan="3" class="nuM">184.80</td>
+        <td>D1010 Elevators & Lifts</td>
+        <td class="nuM">184.80</td>       
+    </tr>
+    <tr>
+      <td>D1020 Escalators &Moving Walks</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td>D1030 Other Conveying Systems</td>
+        <td class="nuM">0.00</td>
+    </tr>       
+    <tr>
+      <td rowspan="5" class="nuM">D20 Plumbing</td>
+        <td rowspan="5" class="nuM">91.60</td>
+        <td>D2010 Plumbing Fixtures</td>
+        <td class="nuM">58.80</td>
+    </tr>
+    <tr>
+      <td>D2020 Domestic Water Distribution</td>
+        <td class="nuM">14.80</td>
+    </tr>
+    <tr>
+      <td>D2030 Sanitary Waste</td>
+        <td class="nuM">13.60</td>
+    </tr>
+    <tr>
+      <td>D2040 Rain Water Drainage</td>
+        <td class="nuM">4.40</td>
+    </tr>
+    <tr>
+      <td>D2090 Other Plumping Systems</td>
+        <td class="nuM">0。00</td>
+    </tr>
+    <tr>
+      <td rowspan="8" class="nuM">D30 HVAC</td>
+        <td rowspan="8" class="nuM">561.20</td>
+        <td>D3010 Energy Supply</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td>D3020 Heat Generation System</td>
+        <td class="nuM">17.20</td>
+    </tr>
+    <tr>
+      <td>D3030 Cooling Generation System</td>
+        <td class="nuM">101.60</td>
+    </tr>
+    <tr>
+      <td>D3040 Distribution Systems</td>
+        <td class="nuM">362.00</td>
+    </tr>
+    <tr>
+      <td>D3050 Terminal & Package Units </td>
+        <td class="nuM">6.40</td>
+    </tr>
+    <tr>
+      <td>D3060 Control & Instrumentation</td>
+        <td class="nuM">64.00</td>
+    </tr>
+    <tr>
+      <td>D3070 System Testing & Balancing</td>
+        <td class="nuM">10.00</td>
+    </tr>
+    <tr>
+      <td>D3090 Other HVAC Systems & Equipments</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td rowspan="4" class="nuM">D40 Fire Protection</td>
+        <td rowspan="4" class="nuM">81.60</td>
+        <td>D4010 Sprinklers</td>
+        <td class="nuM">64.00</td>
+    </tr>
+    <tr>
+      <td>D4020 Standpipes</td>
+        <td class="nuM">17.60</td>
+    </tr>
+    <tr>
+      <td>D4030 Fire Protection Specialties</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td>D4090 Other Fire Protection Systems</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td rowspan="4" class="nuM">D50 Electrical</td>
+        <td rowspan="4" class="nuM">473.60</td>
+        <td>D5010 Electrical Service & Distribution</td>
+        <td class="nuM">54.40</td>
+    </tr>
+    <tr>
+      <td>D5020 Lighting & Branch Wiring</td>
+        <td class="nuM">321.60</td>
+    </tr>
+    <tr>
+      <td>D5030 Communication & Security</td>
+        <td class="nuM">85.60</td>
+    </tr>
+    <tr>
+      <td>D5090 Other Electrical Systems</td>
+        <td class="nuM">12.00</td>
+    </tr>
+  
+  
+    <tr>
+      <th scope="row" class="nuM" rowspan="6">E Equipment and Furnishings</th>
+      <td rowspan="6" class="nuM">54.60</td>
+      <td rowspan="6" class="nuM">1.80%</td>
+      <td rowspan="4" >E10 Equipment</td>
+      <td rowspan="4" class="nuM">12.00</td>
+      <td>E1010 Commercial Equipment</td>
+      <td class="nuM">0.00</td>
+     
+    </tr>
+    <tr>
+      <td>E1020 Institutional Equipment</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td>E1030 Vehicular Equipment</td>
+        <td class="nuM">7.20</td>
+    </tr>
+    <tr>
+      <td>E1090 Other Equipment</td>
+        <td class="nuM">4.80</td>
+    </tr>
+    <tr>
+      <td rowspan="2">E20 Furnishings</td>
+        <td rowspan="2" class="nuM">41.60</td>
+        <td>E2010 Fixed Furnishings</td>
+        <td class="nuM">41.60</td>
+    </tr>
+    <tr>
+      <td>E2020 Movable Furnishings</td>
+        <td class="nuM">0.00</td>
+    </tr>
+  
+  
+  
+    <tr>
+      <th scope="row" class="nuM" rowspan="7">F Special Construction and Demolition</th>
+      <td rowspan="7" class="nuM">0.00</td>
+      <td rowspan="7" class="nuM">0.00%</td>
+      <td rowspan="5">F10 Special Construction</td>
+      <td rowspan="5" class="nuM">0.00</td>
+      <td>F1010 Special Structures</td>
+      <td class="nuM">0.00</td>
+     
+    </tr>
+    <tr>
+      <td>F1020 Integrated Construction</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td>F1030 Special Construction Systems</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td>F1040 Special Facilities</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td>F1050 Special Controls & Instrumentation</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td rowspan="2">F20 Selective Building Demolition</td>
+        <td rowspan="2" class="nuM">0.00</td>
+        <td>F2010 Building Elements Demolition</td>
+        <td class="nuM">0.00</td>
+    </tr>
+    <tr>
+      <td>F2020 Hazardous Compounds Abatement</td>
+        <td class="nuM">0.00</td>
+    </tr>
+  
+  
+      </tbody>
+    </table>
+
+  </div>
+
+  <div id="rightDiv">
+
+    <div id="intro" class="alert alert-dark" style="width: 90%;" role="alert" >
+      <h2> <b>Review on Cost Distribution</b> </h2>
+      <p>In this part, you can review the cost distribution of the dedign. And the results is also compared with the average cost level</p>
+      <hr>
+      <p class="mb-0">The cost distribution is following Uniformat.</p>
+    </div>
+
+    <div id ="costDis">
+
+      <div class="card" >
+        <h2 class="card-header">Pie Chart of Cost Distribution</h2>
+        <div class="card-body">
+          Project ID <input type="text" value="0001">
+          Model ID <input type="text" value="0001-01">
+          <button id="showCoCom" onclick="showCom()">Display cost information</button>
+          <!-- <div style="font-size: 20px; text-align: center;"><b>Pie Chart of Cost Distribution</b></div> -->
+          <!-- <h2 style="text-align:center;">Pie Chart of Cost Distribution</h2>  -->
+            <div id="container1" style="height: 360%; padding: top -100000px; "></div>
+        </div>
+      </div>
+
+
+
+
+      <div class="card" >
+        <h2 class="card-header">Cost comparison</h2>
+        <div class="card-body">
+
+          <div>
+            Project location
+            <select>
+              <option value="0">Select location</option>
+              <option value="1" selected>Hong Kong</option>
+              <option value="2">Mainland</option>
+              <option value="3">Singapore</option>
+              <option value="4">Japan</option>
+            </select>
+    
+            Porjetc type
+            <select>
+              <option value="0" >Select project type</option>
+              <option value="1">Apartment</option>
+              <option value="2">Condo</option>
+              <option value="3">Co-Op</option>
+              <option value="4"selected>Single-Family (Detached)</option>
+            </select>
+    
+            <button id="showCoCom" onclick="showCom()">Show cost comparison</button>
+          </div>
+          
+
+
+
+
+          <div>
+            <div style="font-size: 20px; text-align: center; padding-top: -100px; line-height: 60px;"><b>Cost Comparison with average level</b></div>
+          </div>
+
+          <div>
+            
+            <span id="container4" style="height: 200px; width: 180px; padding-left: 2%; float: left;"></span>
+            <span id="container5" style="height: 200px; width: 180px; padding-left: 4%; float: left;"></span>
+            <span id="container6" style="height: 200px; width: 180px; padding-left: 4%; float: left;"></span>
+            <span id="container7" style="height: 200px; width: 180px; padding-left: 4%; float: left;"></span>
+            <span id="container8" style="height: 300px; width: 180px; padding-left: 4%; float: left;"></span>
+            <span id="container9" style="height: 300px; width: 180px; padding-left: 4%; float: left;"></span>
+            <span id="container3" style="height: 300px; width: 180px; padding-left: 2%; float: left;"></span>
+          </div>
+
+
+        </div>
+      </div>
+      
+
+
+  </div>
+
+  <div class="card" >
+    <h2 class="card-header">Review comments</h2>
+    <div class="card-body">
+      <textarea style="width:98%" rows="3"> </textarea> <br>
+    </div>
+  </div>
+
+  <div id='submit-btn'>
+    <input  type="submit" class="btn btn-primary" style="width:100%" value="Confirmation" >
+  </div>
+
+
+  </div>
+
+  <script type="text/javascript">
+
+
+    function showCom() {
+      var parent = document.getElementById("showCoCom");
+      console.log("Hi, here!");
+
+      var newCons = document.createElement('div');
+      var newCons2 = document.createElement('div');
+
+      newCons.innerHTML = '<div>\
+                          <div style=\"font-size: 20px; text-align: center; line-height: 60px;\"><b>Cost Comparison with average level</b></div>\
+                            <span id=\"container4\" style=\"height: 300px; width: 180px; padding-left: 2%; float: left;\"></span>\
+                            <span id=\"container5\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+                            <span id=\"container6\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+                            <span id=\"container7\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+                            <span id=\"container8\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+                            <span id=\"container9\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+                            <span id=\"container3\" style=\"height: 300px; width: 180px; padding-left: 2%; float: left;\"></span>\
+                          </div>'
+      // newCons2.innerHTML = '<div>\
+      //                       <span id=\"container4\" style=\"height: 300px; width: 180px; padding-left: 2%; float: left;\"></span>\
+      //                       <span id=\"container5\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+      //                       <span id=\"container6\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+      //                       <span id=\"container7\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+      //                       <span id=\"container8\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+      //                       <span id=\"container9\" style=\"height: 300px; width: 180px; padding-left: 4%; float: left;\"></span>\
+      //                       <span id=\"container3\" style=\"height: 300px; width: 180px; padding-left: 2%; float: left;\"></span>\
+      //                     </div>'
+
+
+      var oldBtn = document.getElementsByName("oldBtn");
+      console.log(oldBtn);
+
+      parent.parentNode.parentNode.insertBefore(newCons, null);
+      // parent.parentNode.insertBefore(newCons, null);
+
+    };
+
+  </script>
+
+
+
+
+
+
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container1');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    var data = [  
+  {
+    name: 'A',
+    itemStyle: {
+      color: '#7B241C'
+    },
+    children: [
+      {
+        name: 'A10',
+        itemStyle: {
+          color: '#922B21'
+        },
+        children: [
+            {
+            name: 'A1010',
+            value:22.40,
+            itemStyle: {
+            color: '#A93226'
+            }   
+        },
+        {
+            name: 'A1030',
+            value:13.60,
+            itemStyle: {
+            color: '#C0392B'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'A20',
+        itemStyle: {
+          color: '#943126'
+        },
+        children: [
+            {
+            name: 'A2010',
+            value:20.00,
+            itemStyle: {
+            color: '#B03A2E'
+            }   
+        },
+        {
+            name: 'A2020',
+            value:36.00,
+            itemStyle: {
+            color: '#CB4335'
+            }   
+        },
+        ]
+      },
+    ]
+    
+  },
+
+  {
+    name: 'B',
+    itemStyle: {
+      color: '#512E5F'
+    },
+    children: [
+      {
+        name: 'B10',
+        itemStyle: {
+          color: '#633974'
+        },
+        children: [
+            {
+            name: 'B1010',
+            value:429.60,
+            itemStyle: {
+            color: '#76448A'
+            }   
+        },
+        {
+            name: 'B1020',
+            value:30.00,
+            itemStyle: {
+            color: '#884EA0'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'B20',
+        itemStyle: {
+          color: '#AF7AC5'
+        },
+        children: [
+            {
+            name: 'B2010',
+            value:729,
+            itemStyle: {
+            color: '#C39BD3'
+            }   
+        },
+        {
+            name: 'B2020',
+            value:560.4,
+            itemStyle: {
+            color: '#D7BDE2'
+            }   
+        },
+        {
+            name: 'B2030',
+            value:24,
+            itemStyle: {
+            color: '#D2B4DE'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'B30',
+        itemStyle: {
+          color: '#5B2C6F'
+        },
+        children: [
+            {
+            name: 'B3010',
+            value:38.40,
+            itemStyle: {
+            color: '#6C3483'
+            }   
+        },
+        {
+            name: 'B3020',
+            value:0.92,
+            itemStyle: {
+            color: '#7D3C98'
+            }   
+        },
+        ]
+      },
+    ]
+  },
+
+  {
+    name: 'C',
+    itemStyle: {
+      color: '#0E6251'
+    },
+    children: [
+      {
+        name: 'C10',
+        itemStyle: {
+          color: '#117864'
+        },
+        children: [
+            {
+            name: 'C1010',
+            value:357.6,
+            itemStyle: {
+            color: '#148F77'
+            }   
+        },
+        {
+            name: 'C1020',
+            value:52.00,
+            itemStyle: {
+            color: '#17A589'
+            }   
+        },
+        {
+            name: 'C1030',
+            value:14.72,
+            itemStyle: {
+            color: '#1ABC9C'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'C20',
+        itemStyle: {
+          color: '#48C9B0'
+        },
+        children: [
+            {
+            name: 'C2010',
+            value:76.80,
+            itemStyle: {
+            color: '#76D7C4'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'C30',
+        itemStyle: {
+          color: '#0E6655'
+        },
+        children: [
+            {
+            name: 'C3010',
+            value:83.70,
+            itemStyle: {
+            color: '#0E6655'
+            }   
+        },
+        {
+            name: 'C3020',
+            value:103.60,
+            itemStyle: {
+            color: '#117A65'
+            }   
+        },
+        {
+            name: 'C3030',
+            value:61.60,
+            itemStyle: {
+            color: '#138D75'
+            }   
+        },
+        ]
+      },
+    ]
+  },
+
+  {
+    name: 'D',
+    itemStyle: {
+      color: '#2874A6'
+    },
+    children: [
+      {
+        name: 'D10',
+        itemStyle: {
+          color: '#154360'
+        },
+        children: [
+            {
+            name: 'D1010',
+            value:184.80,
+            itemStyle: {
+            color: '#1A5276'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'D20',
+        itemStyle: {
+          color: '#1F618D'
+        },
+        children: [
+            {
+            name: 'D2010',
+            value:58.80,
+            itemStyle: {
+            color: '#2471A3'
+            }   
+        },
+        {
+            name: 'D2020',
+            value:14.80,
+            itemStyle: {
+            color: '#2980B9'
+            }   
+        },
+        {
+            name: 'D2030',
+            value:13.60,
+            itemStyle: {
+            color: '#5499C7'
+            }   
+        },
+        {
+            name: 'D2040',
+            value:4.40,
+            itemStyle: {
+            color: '#7FB3D5'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'D30',
+        itemStyle: {
+          color: '#1B4F72'
+        },
+        children: [
+            {
+            name: 'D3020',
+            value:17.20,
+            itemStyle: {
+            color: '#21618C'
+            }   
+        },
+        {
+            name: 'D3030',
+            value:101.60,
+            itemStyle: {
+            color: '#2874A6'
+            }   
+        },
+        {
+            name: 'D3040',
+            value:362.00,
+            itemStyle: {
+            color: '#2E86C1'
+            }   
+        },
+        {
+            name: 'D3050',
+            value:6.40,
+            itemStyle: {
+            color: '#3498DB'
+            }   
+        },
+        {
+            name: 'D3060',
+            value:64.00,
+            itemStyle: {
+            color: '#5DADE2'
+            }   
+        },
+        {
+            name: 'D3070',
+            value:10.00,
+            itemStyle: {
+            color: '#85C1E9'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'D40',
+        itemStyle: {
+          color: '#A9CCE3'
+        },
+        children: [
+            {
+            name: 'D4010',
+            value:64.00,
+            itemStyle: {
+            color: '#D4E6F1'
+            }   
+        },
+        {
+            name: 'D4020',
+            value:17.60,
+            itemStyle: {
+            color: '#EAF2F8'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'D50',
+        itemStyle: {
+          color: '#85C1E9'
+        },
+        children: [
+            {
+            name: 'D5010',
+            value:54.40,
+            itemStyle: {
+            color: '#AED6F1'
+            }   
+        },
+        {
+            name: 'D5020',
+            value:321.60,
+            itemStyle: {
+            color: '#7FB3D5'
+            }   
+        },
+        {
+            name: 'D5030',
+            value:85.60,
+            itemStyle: {
+            color: '#EBF5FB'
+            }   
+        },
+        {
+            name: 'D5040',
+            value:12.00,
+            itemStyle: {
+            color: '#D6EAF8'
+            }   
+        },
+        ]
+      },
+    ]
+  },
+
+  
+  {
+    name: '     E',
+    itemStyle: {
+      color: '#145A32'
+    },
+    children: [
+      {
+        name: 'E10',
+        itemStyle: {
+          color: '#196F3D'
+        },
+        children: [
+            {
+            name: 'E1030',
+            value:7.20,
+            itemStyle: {
+            color: '#1E8449'
+            }   
+        },
+        {
+            name: 'E1030',
+            value:4.80,
+            itemStyle: {
+            color: '#229954'
+            }   
+        },
+        ]
+      },
+      {
+        name: 'E20',
+        itemStyle: {
+          color: '#27AE60'
+        },
+        children: [
+            {
+            name: 'E2010',
+            value:41.60,
+            itemStyle: {
+            color: '#27AE60'
+            }   
+        },
+        ]
+      },      
+    ]
+  },
+  ];
+  option = {
+  //   title: {
+  //   text: 'Cost distribution (Follow Uniformat)',
+  //   subtext: 'Follow Uniformat',
+  //   subtext:'Cost per Sq.Ft. ($)',
+  //   left: 'center',
+  // //  color:'#7B241',
+  // },
+  //   title: {
+  //     text: 'Cost distribution',
+  //     //subtext: 'Source: https://worldcoffeeresearch.org/work/sensory-lexicon/',
+  //     textStyle: {
+  //       fontSize: 14,
+  //       align: 'center'
+  //     },
+  //     // subtextStyle: {
+  //     //   align: 'center'
+  //     // },
+  //     // sublink: 'https://worldcoffeeresearch.org/work/sensory-lexicon/'
+  //   },
+
+
+
+
+
+
+  tooltip: {
+    trigger: 'item'
+  },
+  tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+  legend: {
+    orient: 'vertical',
+    righ:10,
+    left: 'center'
+  },
+
+  series: {
+    type: 'sunburst',
+    data: data,
+    radius: [0, '95%'],
+    sort: undefined,
+    emphasis: {
+      focus: 'ancestor'
+    },
+    levels: [
+      {},
+      {
+        r0: '6%',
+        r: '40%',
+        itemStyle: {
+          borderWidth: 2
+        },
+        label: {
+          //rotate: 'tangential',
+          align: 'center',
+          fontSize:12,
+        }
+      },
+      {
+        r0: '40%',
+        r: '70%',
+        label: {
+          align: 'right',
+          fontSize:12,
+        }
+      },
+      {
+        r0: '70%',
+        r: '80%',
+        label: {
+          position: 'outside',
+          fontSize:10,
+          padding: 3,
+          silent: false
+        },
+        itemStyle: {
+          borderWidth: 3
+        }
+      }
+    ]
+  }
+  };
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+
+  <script type="text/javascript">
+      var dom = document.getElementById('container3');
+      var myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+      });
+      var app = {};
+      
+      var option;
+
+      option = {
+        title: {
+            text:'Total',
+            left:'center',
+          },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+  // legend: {},
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: ['Ori', 'Ave']
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    series: [
+      {
+        name: 'A Substructure',
+        type: 'bar',
+        barWidth: 53,
+        stack: 'Cost',
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [92.00, 108.00]
+        
+      },
+      {
+        name: 'B Shell',
+        type: 'bar',
+        stack: 'Cost',
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [956.00,606.00]
+      },
+      {
+        name: 'C Interiors',
+        type: 'bar',
+        stack: 'Cost',
+        emphasis: {
+          focus: 'series'
+        },
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        data: [480.10, 516.40]
+      },
+      {
+        name: 'D Services',
+        type: 'bar',
+        stack: 'Cost',
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [1392.80, 1471.20]
+      },
+      {
+        name: 'E Furnishings &Equipments',
+        type: 'bar',
+        stack: 'Cost',
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        data: [53.60, 60.00],
+        emphasis: {
+          focus: 'series'
+        },
+        // markLine: {
+        //   lineStyle: {
+        //     type: 'dashed'
+        //   },
+        //   data: [[{ type: 'max' }, { type: 'min' }]]
+        // }
+      },
+      {
+        name: 'Z allowances & OH&P',
+        type: 'bar',
+        stack: 'Cost',
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        //barWidth: 5,
+        //stack: 'Search Engine',
+        emphasis: {
+          focus: 'series'
+        },
+        data: [0, 0]
+      }
+    ]
+  };
+
+      if (option && typeof option === 'object') {
+        myChart.setOption(option);
+      }
+
+      window.addEventListener('resize', myChart.resize);
+  </script>
+
+  <script type="text/javascript">
+          var dom = document.getElementById('container4');
+          var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false
+          });
+          var app = {};
+          
+          var option;
+      
+          option = {
+            title: {
+            text: '  A Substructure',
+            left:'center',
+          },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+      // legend: {},
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['Ori', 'Ave']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            min:0,
+            max:1500,
+          }
+        ],
+        series: [
+          {
+            name: 'A10 Foundations',
+            type: 'bar',
+            barWidth: 55,
+            stack: 'Cost',
+            tooltip: {
+            valueFormatter: function (value) {
+              return value + ' HKD';
+            }
+          },
+            emphasis: {
+              focus: 'series'
+            },
+            data: [36.00, 56.00]
+            
+          },
+          {
+            name: 'A20 Basement Construction',
+            type: 'bar',
+            stack: 'Cost',
+            tooltip: {
+            valueFormatter: function (value) {
+              return value + ' HKD';
+            }
+          },
+            emphasis: {
+              focus: 'series'
+            },
+            data: [56.00, 52.00]
+          },
+        ]
+      };
+      
+          if (option && typeof option === 'object') {
+            myChart.setOption(option);
+          }
+      
+          window.addEventListener('resize', myChart.resize);
+  </script>
+  <script type="text/javascript">
+    var dom = document.getElementById('container5');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    option = {
+      title: {
+            text: 'B Shell',
+            left:'center',
+          },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
+  // legend: {},
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: [
+    {
+      type: 'category',
+      data: ['Ori', 'Ave']
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value',
+      min:0,
+      max:1500
+    }
+  ],
+  series: [
+    {
+      name: 'B10 Superstructure',
+      type: 'bar',
+      barWidth: 55,
+      stack: 'Cost',
+      tooltip: {
+      valueFormatter: function (value) {
+        return value + ' HKD';
+      }
+    },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [459.60, 244.80]
+      
+    },
+    {
+      name: 'B20 Exterior Enclosure',
+      type: 'bar',
+      stack: 'Cost',
+      tooltip: {
+      valueFormatter: function (value) {
+        return value + ' HKD';
+      }
+    },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [1313.40, 949.20]
+    },
+    {
+      name: 'B30 Roofing',
+      type: 'bar',
+      stack: 'Cost',
+      emphasis: {
+        focus: 'series'
+      },
+      tooltip: {
+      valueFormatter: function (value) {
+        return value + 'HKD ';
+      }
+    },
+      data: [39.32, 35.00]
+    }
+  ]
+  };
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+  <script type="text/javascript">
+        var dom = document.getElementById('container6');
+        var myChart = echarts.init(dom, null, {
+          renderer: 'canvas',
+          useDirtyRect: false
+        });
+        var app = {};
+        
+        var option;
+    
+        option = {
+          title: {
+            text: 'C Interiors',
+            left:'center',            
+          },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+    // legend: {},
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['Ori', 'Ave']
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          min:0,
+          max:1500
+        }
+      ],
+      series: [
+        {
+          name: 'C10',
+          type: 'bar',
+          barWidth: 55,
+          stack: 'Cost',
+          tooltip: {
+          valueFormatter: function (value) {
+            return value + ' HKD';
+          }
+        },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [154.40, 149.60]
+          
+        },
+        {
+          name: 'C20',
+          type: 'bar',
+          stack: 'Cost',
+          tooltip: {
+          valueFormatter: function (value) {
+            return value + ' HKD';
+          }
+        },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [76.80, 74.00]
+        },
+        {
+          name: 'C30',
+          type: 'bar',
+          stack: 'Cost',
+          emphasis: {
+            focus: 'series'
+          },
+          tooltip: {
+          valueFormatter: function (value) {
+            return value + ' HKD';
+          }
+        },
+          data: [248.90, 292.80]
+        }
+      ]
+    };
+    
+        if (option && typeof option === 'object') {
+          myChart.setOption(option);
+        }
+    
+        window.addEventListener('resize', myChart.resize);
+  </script>
+  <script type="text/javascript">
+  var dom = document.getElementById('container7');
+  var myChart = echarts.init(dom, null, {
+    renderer: 'canvas',
+    useDirtyRect: false
+  });
+  var app = {};
+
+  var option;
+
+  option = {
+    title: {
+            text: 'D Services',
+            left:'center',
+          },
+  tooltip: {
+  trigger: 'axis',
+  axisPointer: {
+    type: 'shadow'
+  }
+  },
+  // legend: {},
+  grid: {
+  left: '3%',
+  right: '4%',
+  bottom: '3%',
+  containLabel: true
+  },
+  xAxis: [
+  {
+    type: 'category',
+    data: ['Ori', 'Ave']
+  }
+  ],
+  yAxis: [
+  {
+    type: 'value',
+    min:0,
+    max:1500
+  }
+  ],
+  series: [
+  {
+    name: 'D10',
+    type: 'bar',
+    barWidth: 55,
+    stack: 'Cost',
+    tooltip: {
+    valueFormatter: function (value) {
+      return value + ' HKD';
+    }
+  },
+    emphasis: {
+      focus: 'series'
+    },
+    data: [184.80, 172.80]
+    
+  },
+  {
+    name: 'D20',
+    type: 'bar',
+    stack: 'Cost',
+    tooltip: {
+    valueFormatter: function (value) {
+      return value + ' HKD';
+    }
+  },
+    emphasis: {
+      focus: 'series'
+    },
+    data: [91.60, 94.00]
+  },
+  {
+    name: 'D30',
+    type: 'bar',
+    stack: 'Cost',
+    emphasis: {
+      focus: 'series'
+    },
+    tooltip: {
+    valueFormatter: function (value) {
+      return value + ' HKD';
+    }
+  },
+    data: [561.20, 688.80]
+  },
+  {
+    name: 'D40',
+    type: 'bar',
+    stack: 'Cost',
+    tooltip: {
+    valueFormatter: function (value) {
+      return value + ' HKD';
+    }
+  },
+    emphasis: {
+      focus: 'series'
+    },
+    data: [81.60, 75.60]
+  },
+  {
+    name: 'D50',
+    type: 'bar',
+    stack: 'Cost',
+    tooltip: {
+    valueFormatter: function (value) {
+      return value + ' HKD';
+    }
+  },
+    data: [473.60, 440],
+    emphasis: {
+      focus: 'series'
+    },
+    // markLine: {
+    //   lineStyle: {
+    //     type: 'dashed'
+    //   },
+    //   data: [[{ type: 'max' }, { type: 'min' }]]
+    // }
+  }
+  ]
+  };
+
+  if (option && typeof option === 'object') {
+    myChart.setOption(option);
+  }
+
+  window.addEventListener('resize', myChart.resize);
+  </script>
+  <script type="text/javascript">
+      var dom = document.getElementById('container8');
+      var myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+      });
+      var app = {};
+      
+      var option;
+
+      option = {
+        title: {
+            text: 'E Furn.&Equip.',
+            left:'center',
+          },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+  // legend: {},
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: ['Ori', 'Ave']
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        min:0,
+        max:50
+      }
+    ],
+    series: [
+      {
+        name: 'E10',
+        type: 'bar',
+        barWidth: 55,
+        stack: 'Cost',
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [12.00, 16.00]
+        
+      },
+      {
+        name: 'E20',
+        type: 'bar',
+        stack: 'Cost',
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [41.60,44.00]
+      }
+    ]
+  };
+
+      if (option && typeof option === 'object') {
+        myChart.setOption(option);
+      }
+
+      window.addEventListener('resize', myChart.resize);
+  </script>
+  <script type="text/javascript">
+      var dom = document.getElementById('container9');
+      var myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+      });
+      var app = {};
+      
+      var option;
+
+      option = {
+
+        title: {
+        text: 'F Special Cons.',
+        left:'center',
+      },
+      tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    // legend: {},
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: ['Ori', 'Ave']
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        min:0,
+        max:50
+      }
+    ],
+    series: [
+      {
+        name: 'F10',
+        type: 'bar',
+        barWidth: 55,
+        stack: 'Cost',
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [0, 0]
+        
+      },
+      {
+        name: 'F20',
+        type: 'bar',
+        stack: 'Cost',
+        tooltip: {
+        valueFormatter: function (value) {
+          return value + ' HKD';
+        }
+      },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [0, 0]
+      },
+    ]
+    };
+
+      if (option && typeof option === 'object') {
+        myChart.setOption(option);
+      }
+
+      window.addEventListener('resize', myChart.resize);
+
+  </script>
+
+
+
+
+
+</body>
+</html>

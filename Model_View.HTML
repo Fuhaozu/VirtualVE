@@ -1,0 +1,420 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      BuildingSceneLayer with Slice widget
+    </title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin-left: 20px;
+        float: left;
+        height: 100%;
+        width: 70%;
+        position:fixed;
+      }
+      #textPart{
+        height: 95%;
+        margin-left: 70%;
+        width: 29%;
+        padding-left: 2%;
+        /* float: right; */
+        /* width: 10%; */
+        /* margin: 92%;  */
+        /* height: 1850px; */
+        /* border-style: dotted;  */
+        border-width: 3px;
+        position:fixed;
+        overflow-y: auto;       
+      }
+      #menu {
+        padding: 0.8em;
+        max-width: 200px;
+      }
+
+      #sliceContainer {
+        width: inherit;
+      }
+      /* textarea{
+        width: 95%;
+        height: 40px;
+      } */
+
+      input{
+          width: 95%;
+      }
+      .card{
+        width: 95%;
+      }
+      #intro{
+        width:95%;
+      }
+    </style>
+
+    <link href="https://js.arcgis.com/4.23/esri/themes/light/main.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="static/plugins/bootstrap-3.4.1-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="static/plugins/bootstrap-4.6.1-dist/bootstrap-4.6.1-dist/css/bootstrap.css">
+
+
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+    <script>
+      require([
+        "esri/WebScene",
+        "esri/views/SceneView",
+        "esri/layers/BuildingSceneLayer",
+        "esri/widgets/Slice",
+        "esri/analysis/SlicePlane",
+        "esri/widgets/LayerList",
+        "esri/core/Collection",
+        "esri/widgets/BuildingExplorer",
+        "esri/widgets/Daylight",
+        "esri/widgets/BasemapGallery",
+        "esri/widgets/DirectLineMeasurement3D",
+        "esri/widgets/AreaMeasurement3D",
+        "esri/core/promiseUtils",
+        "esri/widgets/Bookmarks",
+        "esri/widgets/Expand"
+      ], (
+        WebScene,
+        SceneView,
+        BuildingSceneLayer,
+        Slice,
+        SlicePlane,
+        LayerList,
+        Collection,
+        BuildingExplorer, 
+        Daylight, 
+        BasemapGallery,
+        DirectLineMeasurement3D,
+        AreaMeasurement3D,
+        promiseUtils, 
+        Bookmarks, 
+        Expand
+      ) => {
+        let activeWidget = null;
+        // Load webscene and display it in a SceneView
+        const webscene = new WebScene({
+          portalItem: {
+            id: "...", //replace with your ArcGIS id
+          }
+        });
+
+        const view = new SceneView({
+          container: "viewDiv",
+          environment: {
+            atmosphere: {
+              // creates a realistic view of the atmosphere
+              quality: "high"
+            },
+            lighting: {
+              // gets the current date at the user's location
+              // and converts it to the local date in Brest, France
+              date: new Date("January 1, 2022 12:00:00 UTC+8"),
+              directShadowsEnabled: false
+            }
+          },
+          map: webscene
+        });
+
+        // Create the BuildingSceneLayer and add it to the webscene
+        const buildingLayer = new BuildingSceneLayer({
+          url: "https://tiles.arcgis.com/tiles/", //replace with your ArcGIS url
+          title: "Design Model"
+        });
+        webscene.layers.add(buildingLayer);
+
+
+        // Add a layer list widget
+        const layerList = new LayerList({
+          view: view
+        });
+        //view.ui.empty("top-left");
+        view.ui.add(layerList, "top-right");
+
+        // End of a layer list widget
+
+
+        /**************************************
+         * Initialize the daylight widget
+         **************************************/
+
+        const daylightWidget = new Daylight({
+          view: view,
+          // plays the animation twice as fast than the default one
+          playSpeedMultiplier: 2,
+          // disable the timezone selection button
+          visibleElements: {
+            timezone: false
+          }
+        });
+
+        /**************************************
+         * Initialize the measure tool
+         **************************************/
+
+        view.ui.add("topbar", "top-left");
+
+        document
+          .getElementById("distanceButton")
+          .addEventListener("click", (event) => {
+            setActiveWidget(null);
+            if (!event.target.classList.contains("active")) {
+              setActiveWidget("distance");
+            } else {
+              setActiveButton(null);
+            }
+          });
+
+        document
+          .getElementById("areaButton")
+          .addEventListener("click", (event) => {
+            setActiveWidget(null);
+            if (!event.target.classList.contains("active")) {
+              setActiveWidget("area");
+            } else {
+              setActiveButton(null);
+            }
+          });
+
+        function setActiveWidget(type) {
+          switch (type) {
+            case "distance":
+              activeWidget = new DirectLineMeasurement3D({
+                view: view
+              });
+
+              // skip the initial 'new measurement' button
+              activeWidget.viewModel.start().catch((error) => {
+                if (promiseUtils.isAbortError(error)) {
+                  return; // don't display abort errors
+                }
+                throw error; // throw other errors since they are of interest
+              });
+
+              view.ui.add(activeWidget, "bottom-left");
+              setActiveButton(document.getElementById("distanceButton"));
+              break;
+            case "area":
+              activeWidget = new AreaMeasurement3D({
+                view: view
+              });
+
+              // skip the initial 'new measurement' button
+              activeWidget.viewModel.start().catch((error) => {
+                if (promiseUtils.isAbortError(error)) {
+                  return; // don't display abort errors
+                }
+                throw error; // throw other errors since they are of interest
+              });
+
+              view.ui.add(activeWidget, "bottom-left");
+              setActiveButton(document.getElementById("areaButton"));
+              break;
+            case null:
+              if (activeWidget) {
+                view.ui.remove(activeWidget);
+                activeWidget.destroy();
+                activeWidget = null;
+              }
+              break;
+          }
+        };
+
+        function setActiveButton(selectedButton) {
+          // focus the view to activate keyboard shortcuts for sketching
+          view.focus();
+          const elements = document.getElementsByClassName("active");
+          for (let i = 0; i < elements.length; i++) {
+            elements[i].classList.remove("active");
+          }
+          if (selectedButton) {
+            selectedButton.classList.add("active");
+          }
+        };
+
+        /**************************************
+         * End of the measure tool
+         **************************************/
+
+        /**************************************
+         * Initialize the slice
+         **************************************/
+
+        view.ui.add("menu", "top-left");
+
+        buildingLayer.when(() => {
+          setSliceWidget();
+        });
+
+        function setSliceWidget() {
+          sliceWidget = new Slice({
+            view: view,
+            container: "sliceContainer"
+          });
+        //   sliceWidget.viewModel.excludedLayers.addMany(excludedLayers);
+          sliceTiltEnabled = true;
+          sliceWidget.viewModel.tiltEnabled = sliceTiltEnabled;
+          //sliceWidget.viewModel.shape = plane;        
+        };
+
+        /**************************************
+         * Initialize the BuildingExplorer
+         **************************************/
+        view.when(() => {
+          // get the BuildingSceneLayer from the webscene
+          webscene.allLayers.forEach((layer) => {
+            if (layer.title === "Design Model") {
+              // explore components in the layer using the BuildingExplorer widget
+              const buildingExplorer = new BuildingExplorer({
+                view: view,
+                layers: [layer]
+              });
+              view.ui.add(buildingExplorer, "top-right");
+            }
+          });
+        });
+        
+        /**************************************
+         * End of the BuildingExplorer
+         **************************************/
+
+
+        /**************************************
+         * Initialize Bookmarks
+         **************************************/
+         const bookmarks = new Bookmarks({
+          view: view,
+          // allows bookmarks to be added, edited, or deleted
+          editingEnabled: true,
+          visibleElements: {
+            time: true // don't show the time (h:m:s) next to the date
+          }
+        });
+
+        const bkExpand = new Expand({
+          view: view,
+          content: bookmarks,
+          expanded: true
+        });
+
+        // Add the widget to the top-right corner of the view
+        view.ui.add(bkExpand, "bottom-left");
+
+        /**************************************
+         * End of the Bookmarks
+         **************************************/
+        
+      });
+    </script>
+  </head>
+
+  <body>
+
+    <nav class="nav nav-pills flex-column flex-sm-row" style="margin-left: 20px; font-size: 20px; width: 1200px;">
+      <a class="flex-sm-fill text-sm-center nav-link" href="project_goal.HTML">Project Goal Identification</a>
+      <a class="flex-sm-fill text-sm-center nav-link" href="Site_View test.HTML">Site Condition Examination</a>
+      <a class="flex-sm-fill text-sm-center nav-link active" href="Model_View.HTML">Design Review</a>
+      <a class="flex-sm-fill text-sm-center nav-link" href="Cost_distribution1.HTML">Cost Analysis</a>
+      <a class="flex-sm-fill text-sm-center nav-link" href="info_sum.HTML">Information Summary</a>
+    </nav>
+
+
+
+    <div id="viewDiv" >
+      <div id="menu" class="esri-widget">
+        <div id="sliceContainer"></div>          
+      </div>
+        
+    </div>
+
+    <div id="topbar">
+        <button
+          class="action-button esri-icon-measure-line"
+          id="distanceButton"
+          type="button"
+          title="Measure distance between two points"
+        ></button>
+        <button
+          class="action-button esri-icon-measure-area"
+          id="areaButton"
+          type="button"
+          title="Measure area"
+        ></button>
+      </div>
+    <div id="textPart">
+
+      <div id="intro" class="alert alert-dark" role="alert" >
+        <h2> <b>Review on Design Model</b> </h2>
+        <p>In this part, you can review on the original design model to understand the design intend. Both the 3D model and an introduction to deisgn intent have benn provided and visualized on the website.</p>
+        <hr>
+        <p class="mb-0">The information are visualized in multiple ways, including 3D model, text, figure and PDF files.</p>
+      </div>
+
+      <div class="card" >
+        <h2 class="card-header" >Design introduction</h2>
+        <div class="card-body">
+          <embed src="./static/resources/design.pdf" type="application/pdf" width=98% height=460><br>
+        </div>
+      </div>
+
+
+      <!-- <div class="card" >
+        <h2 class="card-header">Technical consideration during design</h2>
+        <div class="card-body">
+          <embed src="1.pdf" type="application/pdf" width=98% height=500><br>
+        </div>
+      </div> -->
+
+      <div class="card" >
+        <h2 class="card-header">Technical consideration during design</h2>
+        <div class="card-body" style="height: 120px; overflow-y: auto;">
+          <h3 class="card-title">Consideration on the curtain wall</h3>
+          <textarea style="width: 98%;height: 50px" >To enable the lighting of the building, the glass curtain wall is finally selected. And there are two sides, including front and left side are all implemented with the same kind of glass curtain wall.
+          </textarea> <br>
+          <span id="addComBtn">
+            <button name='oldCoBtn' type="button" style="text-decoration:none" class="btn btn-info" onclick="add2()">Add
+              comments
+            </button>
+          </span>
+
+        <span id="addBtn">
+          <button name='oldBtn' type="button" style="text-decoration:none" class="btn btn-info" onclick="add1()">Add
+            Constraints
+          </button>
+        </span>
+
+          <h3 class="card-title">Consideration on the curtain wall</h3>
+          <textarea style="width: 98%;height: 50px" > </textarea> <br>
+          <h3 class="card-title">Factor one</h3>
+          <textarea style="width: 98%;height: 50px"> </textarea> <br>
+          <h3 class="card-title">Factor one</h3>
+          <textarea style="width: 98%;height: 50px"> </textarea> <br>
+        </div>
+      </div>
+
+      <div class="card" >
+        <h2 class="card-header">Review comments</h2>
+        <div class="card-body">
+          <textarea style="width: 98%;height: 30px" height: 30px;> </textarea> <br>
+          <input type="file" name="" name="input_img" />
+          <div name="show_img"></div>
+        </div>
+      </div>
+      
+      
+
+      <div id='submit-btn'>
+        <input  type="submit" class="btn btn-primary" style="width:98%, font-size 200%" value="Confirmation" >
+      </div>
+
+    </div>    
+  </body>
+</html>

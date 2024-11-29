@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+  <style>
+    
+    /* table {
+        border: 1px solid rgb(7, 7, 7);
+    } */
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        border:"1px";
+        table-layout:auto;
+    }
+    #goal-infor{
+      padding: 0;
+        margin-left: 100px;
+        float: left;
+        height: 100%;
+        width:33%;
+        /* position:fixed; */
+        font-size: 18px;
+        overflow-y: auto; 
+    }
+
+    #goal-idetify{
+        height: 95%;
+        margin-left: 725px;
+        width: 30%;
+        padding-left: 20px;
+        /* float: right; */
+        /* width: 10%; */
+        /* margin: 92%;  */
+        /* height: 1850px; */
+        /* border-style: dotted;  */
+        border-width: 3px;
+        position:fixed;
+        overflow-y: auto; 
+    }
+    #costDis{
+      height:85%
+    }
+
+
+</style>
+
+
+
+<link rel="stylesheet" href="static/plugins/bootstrap-3.4.1-dist/css/bootstrap.css">
+<link rel="stylesheet" href="static/plugins/bootstrap-4.6.1-dist/bootstrap-4.6.1-dist/css/bootstrap.css">
+  
+</head>
+<body style="height: 100%; margin: 0">
+
+  <nav class="nav nav-pills flex-column flex-sm-row" style="margin-left: 20px;font-size: 20px; width: 1200px">
+    <a class="flex-sm-fill text-sm-center nav-link active" href="project_goal.HTML">Project Goal Identification</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="Site_View test.HTML">Site Condition Examination</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="Model_View.HTML">Design Review</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="Cost_distribution - blank.HTML">Cost Analysis</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="info_sum.HTML">Information Summary</a>
+  </nav>
+
+
+  <div id="goal-infor" style="margin-left: 20px; width: 720px;">
+    <div id="intro" class="alert alert-dark" role="alert" >
+      <h2> <b>Review on Project Information</b> </h2>
+      <p>In this part, you can review the project goal and purpose from the perspective of owner/developer.</p>
+      <hr>
+      Covering basic info., cost&schedule constriants, and other issue to be considered.      
+    </div>
+  
+    <div class="card" >
+      <h2 class="card-header">Basic information</h2>
+      <div class="card-body">
+        <h3 class="card-title">Project Background</h3>
+        <textarea style="width:98%;font-size:16px;" rows="3">This project aims to develop a two-layer detached house for a single family. The site for the building project is located at Wang Chui Road, Kwun Tong, Hong Kong. The owner has a limited budget and a desirable construction duration. </textarea> 
+
+        <h3 class="card-title">Porjetc type</h3>
+        <select style="font-size:16px;">
+          <option value="0" selected>Select project type</option>
+          <option value="1">Apartment</option>
+          <option value="2">Condo</option>
+          <option value="3">Co-Op</option>
+          <option value="4">Single-Family (Detached)</option>
+        </select>
+
+        <h3 class="card-title">Floors</h3>
+        <input type="text" style="font-size:16px;" value="Two">
+
+        <h3 class="card-title">Floor Plan</h3>
+        <textarea style="width:98%;font-size:16px;">Three rooms in 1st floor (a bedroom, a living room, a bathroom and an open kitchen)
+Four rooms in 2nd floor (a bedroom, a playroom, a bathroom, and a guest room)</textarea> 
+      </div>            
+    </div>
+
+    <div class="card" >
+      <h2 class="card-header">Schedule constraints</h2>
+      <div class="card-body">
+        <h3 class="card-title">Overall schedule planning</h3>
+        <textarea style="width:98%;font-size:16px;" rows="2">This project is expected to commence before November 1st of this year and to be completed before May 30th of 2023, with a construction duration of six months.  </textarea>
+
+        <h3 class="card-title">Planned commence date</h3>
+        <input type="date" style="font-size:16px;"value="2022-11-01"/> <br>
+
+        <h3 class="card-title">Planned completion date</h3>
+        <input type="date" style="font-size:16px;"value="2023-05-30"/> </textarea> <br>
+
+        <h3 class="card-title">Construction duration</h3>
+        <input type="text" style="font-size:16px;"value="6"> Month
+
+      </div>
+    </div>
+
+    <div class="card" >
+      <h2 class="card-header">Budget constraints</h2>
+      <div class="card-body">
+        <h3 class="card-title">Total budget</h3> 
+        <input type="text" style="font-size:16px;" value="20,000,000"> HKD
+
+        <h3 class="card-title">Other cost requirement</h3>
+        <textarea style="width:98%;font-size:16px;"> </textarea>
+      </div>
+    </div>
+
+    <div class="card" >
+      <h2 class="card-header">Issue to be Considered</h2>
+      <div class="card-body">
+        <h3 class="card-title">Lighting</h3> 
+        <textarea style="width:98%;font-size:16px;"rows="2">Since high-rise buildings are around that site, the lighting is an important factor for building design. </textarea>
+
+        <h3 class="card-title">Preference</h3>
+        <textarea style="width:98%;font-size:16px;" rows="1">The owner has a preference on large bedroom.</textarea>
+
+        <h3 class="card-title">Construction</h3>
+        <textarea style="width:98%;font-size:16px;"rows="2">The project is in the city center; thus, measures should be taken on construction noise control.</textarea>
+      </div>
+    </div>
+  </div>
+
+  <div id="goal-idetify">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading"><h2 >Identify Project Goals</h2></div>
+      <div class="panel-body">
+        <p style="font-size: large;"> <i>Note: The goals are to meet the needed function of the owner with satisfying the constraints in the perspective of cost, schedule, and other concerned issues.</i></p>
+      </div>
+
+      <span>
+        <button type="button" class="btn btn-default">Default</button>
+        <button type="button" class="btn btn-success">Success</button>
+      </span>     
+    
+      <!-- List group -->
+      <ul class="list-group">
+        <li class="list-group-item">Cras justo odio</li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Morbi leo risus</li>
+        <li class="list-group-item">Porta ac consectetur ac</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+      </ul>
+
+      <span id="addBtn">
+        <button name='oldBtn' type="button" style="text-decoration:none" class="btn btn-info" onclick="add1()">Add new goal
+        </button>
+        <button name='oldBtn' type="button" style="text-decoration:none" class="btn btn-info" >Finish the identification
+        </button>
+  
+      </span>
+    </div>
+
+
+    <div class="card" >
+      <h2 class="card-header">Identify the Project Goals</h2>
+      <div class="card-body">
+        <h4> <i>Note: The goals are to meet the needed function of the owner with satisfying the constraints in the perspective of cost, schedule, and other concerned issues.</i></h4><br><br>
+        <h3 class="card-title"> <input style="width:98%" type="text" value="Record the identified goal"> </h3> 
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">Panel heading</div>
+          <div class="panel-body">
+            <p>...</p>
+          </div>
+        
+          <!-- List group -->
+          <ul class="list-group">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div>
+
+        <span id="addBtn">
+          <button name='oldBtn' type="button" style="text-decoration:none" class="btn btn-info" onclick="add1()">Add new goal
+          </button>
+          <button name='oldBtn' type="button" style="text-decoration:none" class="btn btn-info" >Finish the identification
+          </button>
+
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+   <!-- 添加 new constraints -->
+   <script type="text/javascript">
+
+
+    function add1() {
+      var parent = document.getElementById("addBtn");
+      console.log("Hi, here!");
+
+      var newCons = document.createElement('div');
+      
+
+      newCons.innerHTML = '<div>\
+                                      <h3 class=\"card-title\">     <input style=\"width:98%\" type=\"text\" value=\"Record the identified goal \">  </h3 >\
+                                      <span id=\"addComBtn\">\
+                                          <button name=\'oldBtn\' type=\"button\" style=\"text-decoration:none\" class=\"btn btn-info\" onclick=\"add1()\">Add new goal\
+                                          </button>\
+                                      </span>\
+                                      <span id=\"addBtn\">\
+                                          <button name=\'oldBtn\' type=\"button\" style=\"text-decoration:none\" class=\"btn btn-info\" >Finish the identification\
+                                          </button>\
+                                      </span>\
+                                      </div >\ '
+
+      var oldBtn = document.getElementsByName("oldBtn");
+      console.log(oldBtn);
+
+      for (var i = 0; i < oldBtn.length; ++i) {
+        var item = oldBtn[i];
+        console.log(item);
+        console.log("Hi, here!");
+        item.setAttribute('style', 'VISIBILITY: hidden');
+      }
+
+      parent.parentNode.insertBefore(newCons, null);
+
+    };
+
+  </script>
+
+
+</body>
+</html>

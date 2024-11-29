@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+  <style>
+    
+    /* table {
+        border: 1px solid rgb(7, 7, 7);
+    } */
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        border:"1px";
+        table-layout:auto;
+    }
+    #goal-infor{
+      padding: 0;
+        margin-left: 20px;
+        float: left;
+        /* height: 100%; */
+        width:1600px;
+        /* position:fixed; */
+        font-size: 18px;
+        /* overflow-y: auto;  */
+    }
+
+    #costDis{
+      height:85%
+    }
+
+
+</style>
+
+<link href="https://js.arcgis.com/4.23/esri/themes/light/main.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="static/plugins/bootstrap-3.4.1-dist/css/bootstrap.css">
+<link rel="stylesheet" href="static/plugins/bootstrap-4.6.1-dist/bootstrap-4.6.1-dist/css/bootstrap.css">
+
+<link rel="stylesheet" href="static/plugins/bootstrap-3.4.1-dist/css/bootstrap.css">
+<link rel="stylesheet" href="static/plugins/bootstrap-4.6.1-dist/bootstrap-4.6.1-dist/css/bootstrap.css">
+  
+</head>
+<body style="height: 100%; margin: 0">
+
+  <nav class="nav nav-pills flex-column flex-sm-row" style="margin-left: 20px; font-size: 20px; width: 1200px;">
+    <a class="flex-sm-fill text-sm-center nav-link" href="project_goal.HTML">Project Goal Identification</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="Site_View test.HTML">Site Condition Examination</a>
+    <a class="flex-sm-fill text-sm-center nav-link " href="Model_View.HTML">Design Review</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="Cost_distribution - blank.HTML">Cost Analysis</a>
+    <a class="flex-sm-fill text-sm-center nav-link active" href="info_sum.HTML">Information Summary</a>
+  </nav>
+
+
+  <div  style="margin-left: 20px; width: 1700px;">
+    <div id="intro" class="alert alert-dark" role="alert" >
+      <h2> <b>Information Summary</b> </h2>
+      <h2 style="font-weight:normal"><p>This part summarizes the identified goal and constraints during the information phase, covering project goals, cost summary, review on design model and review on site condition. </p></h2>
+      <hr>
+      <h2 style="font-weight:normal">The details can be viewed through clicking the specific information. </h2>    
+    </div>
+  </div>
+
+  <div id="goal-infor">
+    <div >
+
+      <div class="card" style="width: 490px; height: 600px; position: fixed; overflow-y: auto;">
+        <h2 class="card-header">Project Goals</h2>
+        <div class="card-body">
+          <details>
+            <summary><big>Identified project goals</big></summary>
+
+            <table class="table table-bordered">
+        
+              <tr>
+                  <td colspan="2" class="active" style="width: 180px; font-size: 12px; text-align: center; ">Function</td>
+                  <td colspan="3" class="active" style="width: 198px; font-size: 12px; text-align: center;">Performance</td>
+              </tr>
+              <tr>
+                <td class="active" style="width: 80px; font-size: 12px; text-align: center;">Verb</td>
+                <td class="active" style="width: 100px; font-size: 12px; text-align: center;">Norm</td>
+                <td class="active" style="width: 150px; font-size: 12px; text-align: center;">Criteria</td>
+                <td class="active" style="width: 400px; font-size: 12px; text-align: center;">Level</td>
+                <td class="active" style="width: 150px; font-size: 12px; text-align: center;">Flexibility</td>
+              </tr>
+      
+              <tr>
+                <td class="active" style="width: 130px; font-size: 12px; text-align: center; vertical-align: middle;">Construct</td>
+                <td class="active" style="width: 168px; font-size: 12px; text-align: center; vertical-align: middle;">A two-story single-family building</div></td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Number of floors, room distribution.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">A two-layer house with three rooms on the first floor and four rooms on the second floor.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Must</td>
+               
+                <!-- <td class="active" style="width: 131px; font-size: 16px; text-align: center; vertical-align: middle;">
+                  <label><input type="radio" style="font-weight: normal; " name="option1"> F1</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option1"> F2</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option1"> F3</label>
+                </td> -->
+              </tr>
+      
+              <tr>
+                <td class="active" style="width: 130px; font-size: 12px; text-align: center; vertical-align: middle; line-height: 3;">Ensure</td>
+                <td class="active" style="width: 168px; font-size: 12px; text-align: center; vertical-align: middle;">Project timeline</div></td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Start date, completion date.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Start the project before November 1st and complete it within a six-month timeframe.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Must</td>
+                <!-- <td class="active" style="width: 131px; font-size: 16px; text-align: center; vertical-align: middle;">
+                  <label><input type="radio" style="font-weight: normal; " name="option2"> F1</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option2"> F2</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option2"> F3</label>
+                </td> -->
+              </tr>
+      
+              <tr>
+                <td class="active" style="width: 130px; font-size: 12px; text-align: center; vertical-align: middle; line-height: 3;">Control </td>
+                <td class="active" style="width: 168px; font-size: 12px; text-align: center; vertical-align: middle;">Project budget</div></td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Project budget.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Conclude the project within a 20,000,000 HK$ budget.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Negotiable</td>
+                <!-- <td class="active" style="width: 131px; font-size: 16px; text-align: center; vertical-align: middle;">
+                  <label><input type="radio" style="font-weight: normal; " name="option3"> F1</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option3"> F2</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option3"> F3</label>
+                </td> -->
+              </tr>
+      
+              <tr>
+                <td class="active" style="width: 130px; font-size: 12px; text-align: center; vertical-align: middle; line-height: 3;">Control </td>
+                <td class="active" style="width: 168px; font-size: 12px; text-align: center; vertical-align: middle;">Construction noise</div></td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Noise levels.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Maintain low-level construction noise to minimize disruptions.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Must</td>
+                <!-- <td class="active" style="width: 131px; font-size: 16px; text-align: center; vertical-align: middle;">
+                  <label><input type="radio" style="font-weight: normal; " name="option4"> F1</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option4"> F2</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option4"> F3</label>
+                </td> -->
+              </tr>
+      
+              <tr>
+                <td class="active" style="width: 130px; font-size: 12px; text-align: center; vertical-align: middle; line-height: 3;">Ensure</td>
+                <td class="active" style="width: 168px; font-size: 12px; text-align: center; vertical-align: middle;">Lighting design</div></td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Lighting design, natural light integration.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Install lighting systems that provide ample illumination throughout the house.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Must</td>
+                <!-- <td class="active" style="width: 131px; font-size: 16px; text-align: center; vertical-align: middle;">
+                  <label><input type="radio" style="font-weight: normal; " name="option5"> F1</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option5"> F2</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option5"> F3</label>
+                </td> -->
+              </tr>
+      
+              <tr>
+                <td class="active" style="width: 130px; font-size: 12px; text-align: center; vertical-align: middle; line-height: 3;">Provide </td>
+                <td class="active" style="width: 168px; font-size: 12px; text-align: center; vertical-align: middle;">Spacious Bedrooms</div></td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Bedroom size.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Design bedrooms with sufficient space for furniture and comfort.</td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Negotiable</td>
+                <!-- <td class="active" style="width: 131px; font-size: 16px; text-align: center; vertical-align: middle;">
+                  <label><input type="radio" style="font-weight: normal; " name="option6"> F1</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option6"> F2</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option6"> F3</label>
+                </td> -->
+              </tr>
+      
+              <tr>
+                <td class="active" style="width: 130px; font-size: 12px; font-style: italic; text-align: center; vertical-align: middle;"><div contenteditable>Insert active verb</div></td>
+                <td class="active" style="width: 168px; font-size: 12px; font-style: italic; text-align: center; vertical-align: middle;"><div contenteditable>Insert descriptive noun</div></td>
+                <td class="active" style="width: 133px; font-size: 12px; font-style: italic; text-align: center; vertical-align: middle;"><div contenteditable>Provide perspectives to measure the function.</div></td>
+                <td class="active" style="width: 133px; font-size: 12px; font-style: italic; text-align: center; vertical-align: middle;"><div contenteditable>Define the accetable level.</div></td>
+                <td class="active" style="width: 133px; font-size: 12px; text-align: center; vertical-align: middle;">Flexible</td>
+                <!-- <td class="active" style="width: 131px; font-size: 16px; text-align: center;vertical-align: middle;">
+                  <label><input type="radio" style="font-weight: normal; " name="option7"> F1</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option7"> F2</label>
+                  <label><input type="radio" style="font-weight: normal;" name="option7"> F3</label>
+                </td> -->
+              </tr>
+              <!-- Add more rows with five cells each as needed -->
+            </table>
+            <ol>
+              <li style="list-style:circle"><h4 class="card-title"> Construct A two-story single-family building </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Ensure Project timeline </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Control	Project budget </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Control	Construction noise </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Ensure	Lighting design </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide	Spacious Bedrooms </h4> </li>
+              <!-- <li style="list-style:circle"><h4 class="card-title"> Keep low-level construction noise </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Ensure the lighting of the house</h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide large bedrooms</h4> </li> -->
+
+            </ol>
+          </details>          
+        </div>
+      </div>
+
+      <div class="card" style="margin-left: 500px; width: 400px; height: 600px; position: fixed;overflow-y: auto;">
+        <h2 class="card-header">Site Condition Examination Summary</h2>
+        <div class="card-body">
+          <details>
+            <summary><big>Issues on site work</big></summary>
+            <ol>
+              <li style="list-style:circle"><h4 class="card-title"> Construction site is in the city center </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Adopting Noise Barrier during Construction for noise control </h4> </li>
+            </ol>
+          </details> 
+
+          <details>
+            <summary><big>Issues on supply chain</big></summary>
+            <div class="card" style="width: 36rem;">
+              <img src="./static/resources/site_constraints_fig/permit extension dimensions.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Permit long loads: no more than 1.5 m from the foremost part of the vehicle</p>
+                <button type="button" class="btn btn-info">Details</button>
+              </div>
+            </div>
+
+            <div class="card" style="width: 36rem;">
+              <img src="./static/resources/site_constraints_fig/permit wideth dimension.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Permit wide loads: no more than 1.4 m behind the rearmost part of the vehicle.</p>
+                <button type="button" class="btn btn-info">Details</button>
+              </div>
+            </div>
+
+            <div class="card" style="width: 36rem;">
+              <img src="./static/resources/site_constraints_fig/land check points.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">Land boundary control points: special constraints in these control points.</p>
+                <button type="button" class="btn btn-info">Details</button>
+              </div>
+            </div>
+          </details> 
+
+          <details>
+            <summary><big>Technical consideration during design</big></summary>
+            <ol>
+              <li style="list-style:circle"><h4 class="card-title"> Provide a two-layer single family house </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide four rooms on the first floor </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide three rooms on the second floor </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Start the project before November 1st </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Finalize the project within 20,000,000 HK$ </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Finalize the project within 6 months </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Keep low-level construction noise </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Ensure the lighting of the house</h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide large bedrooms</h4> </li>
+
+            </ol>
+          </details> 
+
+          <details>
+            <summary><big>VE team comments</big></summary>
+            <ol>
+              <li style="list-style:circle"><h4 class="card-title"> Provide a two-layer single family house </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide four rooms on the first floor </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide three rooms on the second floor </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Start the project before November 1st </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Finalize the project within 20,000,000 HK$ </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Finalize the project within 6 months </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Keep low-level construction noise </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Ensure the lighting of the house</h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide large bedrooms</h4> </li>
+
+            </ol>
+          </details> 
+        </div>
+      </div>
+  
+
+
+      <div class="card" style="margin-left: 900px; width: 390px; height: 600px; position: fixed;overflow-y: auto;">
+        <h2 class="card-header">Design Review Summary</h2>
+        <div class="card-body">
+          <details>
+            <summary><big>Design intent</big></summary>
+            <ol>
+              <li style="list-style:circle"><h4 class="card-title"> Provide a two-layer single family house </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide four rooms on the first floor </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide three rooms on the second floor </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Start the project before November 1st </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Finalize the project within 20,000,000 HK$ </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Finalize the project within 6 months </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Keep low-level construction noise </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Ensure the lighting of the house</h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide large bedrooms</h4> </li>
+
+            </ol>
+          </details> 
+
+          <details>
+            <summary><big>Technical consideration during design</big></summary>
+            <ol>
+              <li style="list-style:circle"><h4 class="card-title"> Provide a two-layer single family house </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide four rooms on the first floor </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide three rooms on the second floor </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Start the project before November 1st </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Finalize the project within 20,000,000 HK$ </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Finalize the project within 6 months </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Keep low-level construction noise </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Ensure the lighting of the house</h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Provide large bedrooms</h4> </li>
+
+            </ol>
+          </details> 
+
+          <details>
+            <summary><big>VE team comments</big></summary>
+            <div class="card" style="width: 36rem;">
+              <img src="./static/resources/site_constraints_fig/1door.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">The door on the first floor can be larger.</p>
+                <button type="button" class="btn btn-info">Details</button>
+              </div>
+            </div>
+            <div class="card" style="width: 36rem;">
+              <img src="./static/resources/site_constraints_fig/2windows.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">The interval of the windows on the eastern side should be widen.</p>
+                <button type="button" class="btn btn-info">Details</button>
+              </div>
+            </div>
+            <div class="card" style="width: 36rem;">
+              <img src="./static/resources/site_constraints_fig/3room.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">The bedroom in the second is too small compared with the owner requirements.</p>
+                <button type="button" class="btn btn-info">Details</button>
+              </div>
+            </div>
+            <ol>
+              <li style="list-style:circle"><h4 class="card-title"> To enable the lighting of the building, the glass curtain wall should be adopted. </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> The door on the first floor can be largen. </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> The interval of the windows on the eastern side should be widen. </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> On the second floor, extra windows can be added to the northern side so as to increase the lighting of bedroom. </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> The bedroom in the second is too small.  </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Since the project locates near Kwun Tang Road, special measures should be taken for soundproofing. </h4> </li>
+            </ol>
+          </details> 
+        </div>
+      </div>
+
+      <div class="card" style="margin-left: 1300px; width: 390px; height: 600px; position: fixed;overflow-y: auto;">
+        <h2 class="card-header">Cost Analysis Summary</h2>
+        <div class="card-body">
+          <big class="card-title">Total budget</big> <br>
+          <input type="text" style="font-size:16px;" value="20,000,000"> HKD<br>
+
+          <big class="card-title">Estimated cost</big> <br>
+          <input type="text" style="font-size:16px;" value="21,000,000"> HKD<br>
+    
+          <big class="card-title">Cost performance</big> <br>
+          <input type="text" style="font-size:16px;" value="+5%"> Overbudget<br>
+
+          <details>
+            <summary><big>VE team comments</big></summary>
+            <ol>
+              <li style="list-style:circle"><h4 class="card-title"> Overbudget for 5%, with a total estimation cost of 21,000,000HK$ </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Shell takes the largest proportion of the total cost</h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> Shell and Services takes over 80% of the total cost </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> The cost for Superstructure and Exterior Enclosure are significantly higher compared with the locally average level </h4> </li>
+              <li style="list-style:circle"><h4 class="card-title"> The cost for Roofing and Foundations are significantly lower compared with the locally average level </h4> </li>
+            </ol>
+          </details> 
+        </div>
+      </div>
+
+      <div style="margin-top: 600px; position: fixed;overflow-y: auto;">
+        <button name='oldBtn' type="button" style="text-decoration:none" class="btn btn-info" >Confirmation</button>
+      </div>
+
+
+    </div>
+
+    <div></div>
+
+  </div>
+
+</body>
+</html>
